@@ -39,33 +39,34 @@ public class Loginauthentication extends HttpServlet {
     	   try {
     		String email = req.getParameter("uname").trim();
        		String password = req.getParameter("pass").trim();
+       		
        		Session session = Addfactory.getFactory().openSession();
    			Transaction tx = session.beginTransaction();
+   			
    			String query = "from TodoRegister";
    			Query query2 = session.createQuery(query);
    			List<TodoRegister> users = query2.list();
+   			
    			tx.commit();
    			session.close();
    			for (TodoRegister todoRegister : users) {
    				if ((todoRegister.getEmail().equals(email) && (todoRegister.getPassword().equals(password)) )) {
    					context.setAttribute("ID", todoRegister.getId());
    					flag =0;
-   					System.out.println(todoRegister.getId() + todoRegister.getEmail() + todoRegister.getPassword());
-   					System.out.println(email + password);
-   					//req.setAttribute("id", todoRegister.getId());
-   					//req.getRequestDispatcher("addNotes.jsp").forward(req, res);
+//   					System.out.println(todoRegister.getId() + todoRegister.getEmail() + todoRegister.getPassword());
+//   					System.out.println(email + password);
+//   					req.setAttribute("id", todoRegister.getId());
+//   					req.getRequestDispatcher("addNotes.jsp").forward(req, res);
    					res.sendRedirect("addNotes.jsp");
    					break;
    				}
-   			//	out.print(todoRegister.getEmail() + todoRegister.getPassword() + "  " + email + password);
    			}
-//   			out.print("Username or password may incorrect");
-//   			if(flag ==1)
-//   				res.sendRedirect("login.jsp");
-   		//	out.print(email + password);
+   			res.sendRedirect("login.jsp");
+   		
 
-		} catch (Exception e) {
-			// TODO: handle exception
+		} 
+    	catch (Exception e) 
+    	{
 			System.out.println(e);
 		}
     	   

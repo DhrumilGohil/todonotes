@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.stereotype.Component;
+
 @Entity
 @Table(name = "Usertable")
+@Component
 public class TodoRegister 
 {
 	@Id

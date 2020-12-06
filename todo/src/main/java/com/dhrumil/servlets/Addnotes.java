@@ -30,29 +30,38 @@ public class Addnotes extends HttpServlet {
 		protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		PrintWriter out = res.getWriter();
 		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext("Todomaker.xml");
+			
 			String title = req.getParameter("title");
 			String description = req.getParameter("description");
 			int id =(Integer.parseInt(req.getParameter("id")));
-			System.out.println(id);
-			TodoRegister register = new TodoRegister();
+			
+		//	System.out.println(id);
+			TodoRegister register = (TodoRegister) context.getBean("todoRegister"); //only first letter in annotation
 			register.setId(id);
 			
-			ApplicationContext context = new ClassPathXmlApplicationContext("Todomaker.xml");
-			Todomaker note1 = context.getBean(Todomaker.class);
+			
+		//	Todomaker note1 = context.getBean(Todomaker.class);
+			Todomaker note1 = (Todomaker) context.getBean("todomaker");
 			note1.setTitle(title);
 			note1.setDescrption(description);
 			note1.setAddDate(new Date());
 			note1.setTodoRegister(register);
-			//Hibernet save()
+			
 			
 			Session session = Addfactory.getFactory().openSession();
 			Transaction tx = session.beginTransaction();
-			session.save(note1);
+			
+			session.save(note1);	//Hibernet save()
 			tx.commit();
+			
 			session.close();
+			
 			out.print("<h1 style='text-align:center;'>Added Successfully</h1>");
 			out.print("<a href='ShowAllNotes.jsp'>Show All Notes</a>");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			System.out.println(e);
 		}
 			// TODO Auto-generated method stub

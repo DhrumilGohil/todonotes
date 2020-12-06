@@ -22,20 +22,25 @@ public class deletenotes extends HttpServlet {
        
 	@Override
 		protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-			// TODO Auto-generated method stub
 		try {
 			int NoteID = Integer.parseInt(req.getParameter("noteID").trim());
+			
 			Session session = Addfactory.getFactory().openSession();
 			Transaction tx = session.beginTransaction();
+			
 				Todomaker noteTodomaker = session.get(Todomaker.class, NoteID);
 				session.delete(noteTodomaker);
+				
 			tx.commit();
 			session.close();
+			
 			res.sendRedirect("ShowAllNotes.jsp");
 
-		} catch (Exception e) {
-			// TODO: handle exception
+		} 
+		catch (Exception e) 
+		{
+			System.out.print(e);
 		}
-					}
+}
 
 }

@@ -21,7 +21,5 @@
   <div class="container text-center">
   	<a href="addNotes.jsp" type="button" class="btn btn-outline-success px-5 py-2 mt-3"style="font-size: 20px;">Explore</a>
   </div>
-
-   
   </body>
 </html>

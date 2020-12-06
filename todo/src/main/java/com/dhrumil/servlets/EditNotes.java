@@ -31,13 +31,16 @@ public class EditNotes extends HttpServlet {
 		// TODO Auto-generated method stub
 	  PrintWriter out = res.getWriter();
 		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext("Todomaker.xml");
+			
 			String title = req.getParameter("title");
 			String description = req.getParameter("description");
 			int id = Integer.parseInt(req.getParameter("noteID").trim());
-			out.print(id);
+			
+		//	out.print(id);
 			Session session = Addfactory.getFactory().openSession();
 			Transaction tx = session.beginTransaction();
-			ApplicationContext context = new ClassPathXmlApplicationContext("Todomaker.xml");
+			
 			Todomaker note1 = session.get(Todomaker.class, id);
 			note1.setTitle(title);
 			note1.setDescrption(description);
@@ -47,6 +50,7 @@ public class EditNotes extends HttpServlet {
 		
 			tx.commit();
 			session.close();
+			
 			out.print("<h1 style='text-align:center;'>Update Successfully</h1>");
 			res.sendRedirect("ShowAllNotes.jsp");
 		} catch (Exception e) {
